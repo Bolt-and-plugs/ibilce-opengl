@@ -1,0 +1,6 @@
+target/
+compile_commands.json
+*.log
+*.tmp
+.vscode/
+.idea/
