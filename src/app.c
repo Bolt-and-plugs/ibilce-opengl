@@ -1,8 +1,4 @@
 #include "app.h"
-#include <GL/glut.h> // Make sure glut is included
-#include <math.h>    // === NEW === (for sin, cos)
-#include <stdbool.h> // === NEW === (for bool)
-#include <stdio.h>   // === NEW === (for printf in Mouse func)
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -11,25 +7,22 @@
 App app;
 
 // === NEW: Helper functions for vector math ===
-float rad(float angle) {
-  return angle * M_PI / 180.0f;
-}
+float rad(float angle) { return angle * M_PI / 180.0f; }
 
 vec3f cross(vec3f v1, vec3f v2) {
-  return (vec3f){
-      v1.y * v2.z - v1.z * v2.y,
-      v1.z * v2.x - v1.x * v2.z,
-      v1.x * v2.y - v1.y * v2.x};
+  return (vec3f){v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z,
+                 v1.x * v2.y - v1.y * v2.x};
 }
 
 vec3f normalize(vec3f v) {
   float mag = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-  if (mag == 0.0f) return (vec3f){0,0,0};
+  if (mag == 0.0f)
+    return (vec3f){0, 0, 0};
   return (vec3f){v.x / mag, v.y / mag, v.z / mag};
 }
 
 // === NEW: Camera and Time State ===
-vec3f cameraPos = {0.0f, 0.5f, 3.0f}; // Start position
+vec3f cameraPos = {0.0f, 0.5f, 3.0f};    // Start position
 vec3f cameraFront = {0.0f, 0.0f, -1.0f}; // Looking down -Z
 vec3f cameraUp = {0.0f, 1.0f, 0.0f};
 
@@ -43,7 +36,6 @@ float cameraSpeed = 0.005f; // Base speed
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-// --- App Functions (Unchanged) ---
 bool set_envvar(const char *mode) {
   if (strcmp(mode, "Debug") == 0 || strcmp(mode, "DEBUG") == 0) {
     app.debug = true;
@@ -114,6 +106,13 @@ void HandlePassiveMouseMotion(int x, int y) {
   front.y = sin(rad(pitch));
   front.z = sin(rad(yaw)) * cos(rad(pitch));
   cameraFront = normalize(front);
+
+  
+  if (x >= app.window_width || y >= app.window_height || x <= 0 || y <= 0) {
+    glutWarpPointer(app.window_width / 2, app.window_height / 2);
+    glutPostRedisplay();
+  };
+
 }
 
 // === UPDATED: Mouse button and scroll wheel ===
@@ -125,26 +124,15 @@ void Mouse(int button, int state, int x, int y) {
   if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
     // Handle right mouse button click
   };
-
-  // === NEW: Scroll wheel controls movement speed ===
-  if (button == 3) { // Scroll Up
-    cameraSpeed += 0.001f;
-    if (cameraSpeed > 0.1f) cameraSpeed = 0.1f;
-    // printf("Camera speed: %.3f\n", cameraSpeed);
-  };
-  if (button == 4) { // Scroll Down
-    cameraSpeed -= 0.001f;
-    if (cameraSpeed < 0.001f) cameraSpeed = 0.001f;
-    // printf("Camera speed: %.3f\n", cameraSpeed);
-  };
 };
 
 // === UPDATED: Keyboard handler ===
 void keyboard(unsigned char key, int x, int y) {
   float speed = cameraSpeed * deltaTime; // Apply delta time
-  
+
   // Calculate right vector (for strafing)
-  // We use a "world up" vector for the cross product to keep movement horizontal
+  // We use a "world up" vector for the cross product to keep movement
+  // horizontal
   vec3f worldUp = {0.0f, 1.0f, 0.0f};
   vec3f cameraRight = normalize(cross(cameraFront, worldUp));
 
@@ -204,15 +192,12 @@ void render_scene() {
 
   // === UPDATED: Use gluLookAt for camera ===
   // Calculate the "look at" point
-  vec3f center = {
-      cameraPos.x + cameraFront.x,
-      cameraPos.y + cameraFront.y,
-      cameraPos.z + cameraFront.z
-  };
+  vec3f center = {cameraPos.x + cameraFront.x, cameraPos.y + cameraFront.y,
+                  cameraPos.z + cameraFront.z};
   // Set the camera view
   gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z, // Eye/Camera position
-            center.x, center.y, center.z,        // Look-at point
-            cameraUp.x, cameraUp.y, cameraUp.z); // Up vector
+            center.x, center.y, center.z,          // Look-at point
+            cameraUp.x, cameraUp.y, cameraUp.z);   // Up vector
 
   // --- Your drawing code ---
   Color red = {1.0f, 0.0f, 0.0f, 1.0f};
@@ -221,12 +206,10 @@ void render_scene() {
   draw_wall((vec3f){-2.0f, -2.0f, 0.0f}, (vec3f){-2.0f, 2.0f, 0.0f}, 2.0f,
             (Color){0.6f, 0.4f, 0.2f, 1.0f}, 0, DRAW_CUBE_SOLID);
   draw_ceiling((vec3f){-2.0f, -2.0f, 0.0f}, (vec3f){2.0f, 2.0f, 0.0f}, 2.0f,
-             (Color){0.3f, 0.3f, 0.3f, 1.0f}, 0); // Note: this ceiling is at z=0, might be a bug
+               (Color){0.3f, 0.3f, 0.3f, 1.0f},
+               0); // Note: this ceiling is at z=0, might be a bug
   draw_cube((vec3f){0.0f, 0.0f, 0.5f}, 1.0f, red, 0, DRAW_CUBE_SOLID);
-  
-  // === UPDATED: Fixed draw_skybox call (removed extra color argument) ===
-  // The skybox function from the previous chat did not take a color
-  draw_skybox(50.0f, 0, cameraPos, (Color){0.5f, 0.7f, 1.0f, 1.0f});
+
 
   glutSwapBuffers();
 }
@@ -253,6 +236,8 @@ void init_window(int width, int height) {
   c_info("Initializing window...");
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
   glutInitWindowSize(width, height);
+  app.window_width = width;
+  app.window_height = height;
   glutCreateWindow(app.name);
 
   glMatrixMode(GL_PROJECTION);
@@ -267,9 +252,10 @@ void init_window(int width, int height) {
   glutMotionFunc(HandleActiveMouseMotion);
   glutPassiveMotionFunc(HandlePassiveMouseMotion);
   glutKeyboardFunc(keyboard);
-  glutSpecialFunc(TeclasEspeciais); 
-  
-  glutSetCursor(GLUT_CURSOR_NONE); 
+  glutSpecialFunc(TeclasEspeciais);
+  glutWarpPointer(width, height);
+
+  glutSetCursor(GLUT_CURSOR_NONE);
 }
 
 int main(int argc, char **argv) {
@@ -279,7 +265,7 @@ int main(int argc, char **argv) {
 
   lastFrame = glutGet(GLUT_ELAPSED_TIME); // === NEW: Init frame time ===
   glutMainLoop();
-  
+
   clean_app(); // This is rarely reached, but good practice
   return 0;
 }

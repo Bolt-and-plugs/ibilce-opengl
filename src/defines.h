@@ -11,6 +11,7 @@
 #include "modules/utils/vertex/vertex.h"
 #include <time.h>
 #include <unistd.h>
+#include <math.h>
 
 #ifdef __linux__
 #include <sys/wait.h>

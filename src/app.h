@@ -6,8 +6,7 @@
 // #include "modules/shaders/shaders.h"
 #include "modules/texture/texture.h"
 #include "modules/gl_draw/gl_draw.h"
-
-#include "GL/freeglut.h"
+#include "defines.h"
 
 typedef struct __player {
   float x, y, z;
@@ -18,6 +17,7 @@ typedef struct __App {
   bool debug;
   log_level min_log_level;
   Player player;
+  int window_height, window_width;
   // shader_table st;
 } App;
 
