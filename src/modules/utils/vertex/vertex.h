@@ -13,12 +13,8 @@ typedef struct _vec4 {
   float x, y, z;
 } vec4f;
 
-typedef struct __Vertex2f {
-  vec2f pos;
-} Vertex2f;
-
-typedef struct __Vertex3f {
-  vec3f pos;
-} Vertex3f;
+typedef struct __Color {
+  float r, g, b, a;
+} Color;
 
 #endif
