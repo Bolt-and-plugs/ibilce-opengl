@@ -31,70 +31,28 @@ void init_app() {
 }
 
 void clean_app() {
-  glfwDestroyWindow(app.window.glfw_window);
-  glfwTerminate();
+}
+
+void init_render() {
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
+  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+}
+
+void init_window(int width, int height) {
+  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+  glutInitWindowSize(width, height);
+  glutCreateWindow(app.name);
+
+  init_render();
 }
 
 int main(int argc, char **argv) {
   init_app();
   init_window(600, 400);
-  init_shader_table();
 
-  Vertex3f vertex[4][3] = {
-      {{0.45f, .1f, 0.1f}, {0.45f, .1f, 0.1f}, {0.45f, .1f, 0.1f}},
-      {{0.45f, .1f, 0.1f}, {0.45f, .1f, 0.1f}, {0.45f, .1f, 0.1f}},
-      {{0.45f, .1f, 0.1f}, {0.45f, .1f, 0.1f}, {0.45f, .1f, 0.1f}},
-      {{0.45f, .1f, 0.1f}, {0.45f, .1f, 0.1f}, {0.45f, .1f, 0.1f}}};
 
-  // todo remove this VBO (vertex buffer obj) and VAO (vertex array) shit
-  GLuint VBO, VAO;
-  glGenVertexArrays(1, &VAO);
-  glGenBuffers(1, &VBO);
-
-  glBindVertexArray(VAO);
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertex) / sizeof(Vertex3f), vertex,
-               GL_STATIC_DRAW);
-
-  const GLint vpos_location = glGetAttribLocation(app.st.program, "aPos");
-
-  const GLint vtexture_location =
-      glGetAttribLocation(app.st.program, "aTexCoord");
-
-  if (vpos_location == -1)
-    c_error(SHADER_LOAD_ERROR, "Could not find attribute 'aPos' in shader!\n");
-
-  if (vtexture_location == -1)
-    c_error(SHADER_LOAD_ERROR, "Could not find attribute 'aTex' in shader!\n");
-
-  // Tell OpenGL how to interpret the vertex data in the VBO.
-  glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3f),
-                        (void *)offsetof(Vertex3f, pos));
-  glEnableVertexAttribArray(vpos_location);
-  glEnableVertexAttribArray(2);
-
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
-  glBindVertexArray(0);
-
-  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-  while (!glfwWindowShouldClose(app.window.glfw_window)) {
-    int width, height;
-    glfwGetFramebufferSize(app.window.glfw_window, &width, &height);
-    glViewport(0, 0, width, height);
-    glClearColor(1.f, 1.f, 1.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glUseProgram(app.st.program);
-
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    glfwSwapBuffers(app.window.glfw_window);
-    glfwPollEvents();
-  }
-
-  glDeleteVertexArrays(1, &VAO);
-  glDeleteBuffers(1, &VBO);
+  glutMainLoop();
   clean_app();
   return 0;
 }

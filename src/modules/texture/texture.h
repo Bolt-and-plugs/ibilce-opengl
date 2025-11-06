@@ -2,8 +2,7 @@
 #define __TEXTURES
 
 #include "../../defines.h"
-
-#include "stb/stb_image.h"
+#include "../../../vendor/stb/stb_image.h"
 
 typedef struct __texture {
   u32 idx;

@@ -17,7 +17,6 @@ u32 load_texture(const char *path) {
   if (data) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
                  GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
   } else {
     c_error(TEXTURE_LOADING_ERROR, "Failed to load texture");
     return (u32)-1;
