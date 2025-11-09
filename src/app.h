@@ -8,6 +8,8 @@
 #include "modules/gl_draw/gl_draw.h"
 #include "defines.h"
 
+#define TEXTURE_COUNT 2
+
 typedef struct __player {
   float x, y, z;
 } Player ;
