@@ -4,7 +4,7 @@
 #include "modules/logger/log.h"
 #include "modules/render/render.h"
 // #include "modules/shaders/shaders.h"
-#include "modules/texture/texture.h"
+#include "modules/obj_parser/obj_parser.h"
 #include "modules/gl_draw/gl_draw.h"
 #include "defines.h"
 
@@ -18,7 +18,6 @@ typedef struct __App {
   log_level min_log_level;
   Player player;
   int window_height, window_width;
-  texture_map tex_map;
   // shader_table st;
 } App;
 

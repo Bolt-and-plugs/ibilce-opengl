@@ -105,3 +105,16 @@ size_t darray_capacity(const DynamicArray *array) {
   assert(array != NULL);
   return array->capacity;
 }
+
+
+int darray_get_last(const DynamicArray *array, void *out_element) {
+  assert(array != NULL && out_element != NULL);
+
+  if (array->size == 0)
+    return -1;
+
+  const void *src = (const char *)array->data + ((array->size - 1) * array->element_size);
+  memcpy(out_element, src, array->element_size);
+
+  return 0;
+}

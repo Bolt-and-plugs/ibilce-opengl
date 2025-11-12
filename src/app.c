@@ -1,4 +1,6 @@
 #include "app.h"
+#include "modules/obj_parser/obj_parser.h"
+#include <GL/gl.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -6,11 +8,11 @@
 
 App app;
 
-texture textures[] = {
-    {"assets/textures/skybox.jpg", false, 0},
-    {"assets/textures/grass.jpg", true, 1},
-    {"assets/textures/tree.png", false, 2},
-};
+Model* cube = NULL;
+u32 tex_sky = 0;
+u32 tex_grass = 0;
+u32 tex_tree = 0;
+
 
 float rad(float angle) { return angle * M_PI / 180.0f; }
 
@@ -26,7 +28,6 @@ vec3f normalize(vec3f v) {
   return (vec3f){v.x / mag, v.y / mag, v.z / mag};
 }
 
-// === Estado da Câmera e Tempo ===
 vec3f cameraPos = {0.0f, 0.5f, 5.0f};
 vec3f cameraFront = {0.0f, 0.0f, -1.0f};
 vec3f cameraUp = {0.0f, 1.0f, 0.0f};
@@ -67,58 +68,11 @@ void set_debug_mode() {
 }
 
 
-void loadTexture(texture tex) {
-  int w, h, channels;
-  unsigned char *data =
-      stbi_load(tex.path, &w, &h, &channels, 0); // Carrega a imagem do arquivo
-  if (!data) {
-    printf("Erro ao carregar %s\n", tex.path);
-    exit(1);
-  }
-
-  glBindTexture(GL_TEXTURE_2D, tex.idx);
-
-  // Efeito "esticar" textura para preencher o polígono
-  /*GL_TEXTURE_WRAP_S: eixo horizontal da textura (U).
-        GL_TEXTURE_WRAP_T: eixo vertical da textura (V).
-        GL_CLAMP_TO_EDGE: limita a amostra da textura à borda da imagem (evita
-     vazamento de pixels ao redor).*/
-
-  if (tex.repeat) {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  } else {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  }
-
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-  GLenum format =
-      (channels == 4)
-          ? GL_RGBA
-          : GL_RGB;
-
-  // envia os dados da imagem para a GPU como textura 2D
-  glTexImage2D(GL_TEXTURE_2D, 0, format, w, h, 0, format, GL_UNSIGNED_BYTE,
-               data);
-
-  stbi_image_free(data); // Libera a memória
-}
-
 void init_textures() {
-  const int texture_count = sizeof(textures) / sizeof(textures[0]);
-  app.tex_map.entries = malloc(sizeof(texture) * texture_count);
-  app.tex_map.texId = malloc(sizeof(GLuint) * texture_count);
-  app.tex_map.entries = textures;
-
-
-  glGenTextures(texture_count, app.tex_map.texId);
-  for (int i = 0; i < texture_count; i++) {
-    app.tex_map.entries[i].idx = app.tex_map.texId[i];
-    loadTexture(textures[i]);
-  }
+  c_info("Carregando texturas do mundo...");
+  tex_sky   = load_texture("assets/textures/skybox.jpg");
+  tex_grass = load_texture("assets/textures/grass.jpg");
+  tex_tree  = load_texture("assets/textures/tree.png");
 }
 
 void init_app() {
@@ -128,12 +82,14 @@ void init_app() {
 
 void clean_app() {
   c_info("Cleaning up application...");
+  if (cube) {
+    free_model(cube);
+  }
+  free_all_textures();
   exit(0);
 }
 
-// --- Handlers de Input ---
 void HandleActiveMouseMotion(int x, int y) {
-  // Para ações de arrastar (não usado para câmera)
 }
 
 void HandlePassiveMouseMotion(int x, int y) {
@@ -144,7 +100,7 @@ void HandlePassiveMouseMotion(int x, int y) {
     if (x == centerX && y == centerY) return;
 
     float xoffset = x - centerX;
-    float yoffset = centerY - y; // Inverted Y
+    float yoffset = centerY - y; 
 
     float sensitivity = 0.1f;
     xoffset *= sensitivity;
@@ -153,18 +109,15 @@ void HandlePassiveMouseMotion(int x, int y) {
     yaw += xoffset;
     pitch += yoffset;
 
-    // Clamp pitch
     if (pitch > 89.0f) pitch = 89.0f;
     if (pitch < -89.0f) pitch = -89.0f;
 
-    // Recompute direction
     vec3f front;
     front.x = cos(rad(yaw)) * cos(rad(pitch));
     front.y = sin(rad(pitch));
     front.z = sin(rad(yaw)) * cos(rad(pitch));
     cameraFront = normalize(front);
 
-    // Warp back to center each frame
     glutWarpPointer(centerX, centerY);
 }
 
@@ -183,7 +136,6 @@ void keyboard(unsigned char key, int x, int y) {
     clean_app();
   };
 
-  // Define flags como verdadeiras
   if (key == 'w' || key == 'W') {
     key_w = true;
   };
@@ -234,7 +186,6 @@ void TeclasEspeciais(int key, int x, int y) {
   if (key == GLUT_KEY_UP) {
     // Handle up arrow
   };
-  // ...
 };
 
 void process_input() {
@@ -266,9 +217,7 @@ void process_input() {
   }
 }
 
-// === ATUALIZADO: Render Scene (agora processa input) ===
 void render_scene() {
-  // === Cálculo do DeltaTime ===
   float currentFrame = glutGet(GLUT_ELAPSED_TIME);
   deltaTime = (currentFrame - lastFrame) / 1000.0f;
   lastFrame = currentFrame;
@@ -286,14 +235,11 @@ void render_scene() {
 
 
   // draw
-  draw_skybox(50.0f, app.tex_map.texId[0], cameraPos, (Color){1.0f, 1.0f, 1.0f, 1.0f});
-  draw_grass((vec3f){-200.0f, -200.0f, 0.0f}, (vec3f){200.0f, 200.0f, 0.0f}, (Color){0.3f, 0.3f, 0.3f, 1.0f}, app.tex_map.texId[1]);
+  draw_skybox(50.0f, tex_sky, cameraPos, (Color){1.0f, 1.0f, 1.0f, 1.0f});
 
-  draw_ceiling((vec3f){-2.0f, -2.0f, 0.0f}, (vec3f){2.0f, 2.0f, 0.0f}, 2.0f,
-               (Color){0.3f, 0.3f, 0.3f, 1.0f}, 0);
-  draw_tree((vec3f){5.0f, 0.0f, -5.0f}, 3.0f, 5.0f, app.tex_map.texId[2]);
-  draw_tree((vec3f){-10.0f, 0.0f, -8.0f}, 3.0f, 5.0f, app.tex_map.texId[2]);
 
+  draw_model(cube, (vec3f){0.0f, 0.0f, -3.0f}, (vec3f){0.0f, 45.0f, 0.0f},
+             (vec3f){1.0f, 1.0f, 1.0f});
 
   glutSwapBuffers();
 }
@@ -307,15 +253,11 @@ void init_render() {
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glEnable(GL_CULL_FACE);
-  glCullFace(GL_BACK);
 
-  // draws
   glutDisplayFunc(render_scene);
-  glutIdleFunc(render_scene); // Isso torna render_scene o loop principal
+  glutIdleFunc(render_scene); 
 }
 
-// === ATUALIZADO: Iniciação da Janela ===
 void init_window(int width, int height) {
   c_info("Initializing window...");
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -346,6 +288,8 @@ int main(int argc, char **argv) {
   glutInit(&argc, argv);
   init_window(600, 400);
   init_textures();
+
+  cube = load_model("assets/models/Untitled.obj");
 
   lastFrame = glutGet(GLUT_ELAPSED_TIME);
   glutMainLoop();

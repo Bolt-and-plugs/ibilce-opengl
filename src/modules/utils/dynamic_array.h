@@ -18,5 +18,6 @@ int darray_get(const DynamicArray *array, size_t index, void *out_element);
 int darray_set(DynamicArray *array, size_t index, const void *element);
 size_t darray_size(const DynamicArray *array);
 size_t darray_capacity(const DynamicArray *array);
+int darray_get_last(const DynamicArray *array, void *out_element);
 
 #endif
