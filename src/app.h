@@ -8,8 +8,6 @@
 #include "modules/gl_draw/gl_draw.h"
 #include "defines.h"
 
-#define TEXTURE_COUNT 2
-
 typedef struct __player {
   float x, y, z;
 } Player ;
@@ -20,6 +18,7 @@ typedef struct __App {
   log_level min_log_level;
   Player player;
   int window_height, window_width;
+  texture_map tex_map;
   // shader_table st;
 } App;
 

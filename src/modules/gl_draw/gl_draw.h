@@ -16,4 +16,6 @@ void draw_ceiling(vec3f p1, vec3f p2, float height, Color color, u32 texture_id)
 void draw_cube(vec3f position, float size, Color color, u32 texture_id, DrawCubeType type);
 void draw_skybox(float size, u32 texture_id, vec3f player_pos, Color color);
 
+void draw_tree(vec3f position, float width, float height, u32 texture_id);
+
 #endif

@@ -6,6 +6,12 @@
 
 App app;
 
+texture textures[] = {
+    {"assets/textures/skybox.jpg", false, 0},
+    {"assets/textures/grass.jpg", true, 1},
+    {"assets/textures/tree.png", false, 2},
+};
+
 float rad(float angle) { return angle * M_PI / 180.0f; }
 
 vec3f cross(vec3f v1, vec3f v2) {
@@ -31,7 +37,7 @@ float lastX = 300.0f;
 float lastY = 200.0f;
 bool firstMouse = true;
 
-float cameraSpeed = 0.005f;
+float cameraSpeed = 2.5f;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
@@ -60,23 +66,17 @@ void set_debug_mode() {
   app.min_log_level = get_min_log_level();
 }
 
-GLuint texId[TEXTURE_COUNT];
 
-const char *textures[] = {
-    "assets/textures/skybox.jpg",
-    "assets/textures/grass.jpg",
-};
-
-void loadTexture(const char *filename, GLuint texID) {
+void loadTexture(texture tex) {
   int w, h, channels;
   unsigned char *data =
-      stbi_load(filename, &w, &h, &channels, 0); // Carrega a imagem do arquivo
+      stbi_load(tex.path, &w, &h, &channels, 0); // Carrega a imagem do arquivo
   if (!data) {
-    printf("Erro ao carregar %s\n", filename);
+    printf("Erro ao carregar %s\n", tex.path);
     exit(1);
   }
 
-  glBindTexture(GL_TEXTURE_2D, texID);
+  glBindTexture(GL_TEXTURE_2D, tex.idx);
 
   // Efeito "esticar" textura para preencher o polígono
   /*GL_TEXTURE_WRAP_S: eixo horizontal da textura (U).
@@ -84,20 +84,21 @@ void loadTexture(const char *filename, GLuint texID) {
         GL_CLAMP_TO_EDGE: limita a amostra da textura à borda da imagem (evita
      vazamento de pixels ao redor).*/
 
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // ou GL_REPEAT
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // ou GL_REPEAT
+  if (tex.repeat) {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  } else {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  }
 
-  /*GL_TEXTURE_MIN_FILTER: quando a textura for reduzida (minificação).
-      GL_TEXTURE_MAG_FILTER: quando a textura for ampliada (magnificação).
-      GL_LINEAR: faz interpolação linear (suaviza os pixels, evita blocos
-     visíveis)*/
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
   GLenum format =
       (channels == 4)
           ? GL_RGBA
-          : GL_RGB; // Define o formato da textura de acordo com channels
+          : GL_RGB;
 
   // envia os dados da imagem para a GPU como textura 2D
   glTexImage2D(GL_TEXTURE_2D, 0, format, w, h, 0, format, GL_UNSIGNED_BYTE,
@@ -107,9 +108,16 @@ void loadTexture(const char *filename, GLuint texID) {
 }
 
 void init_textures() {
-  glGenTextures(TEXTURE_COUNT, texId);
-  for (int i = 0; i < TEXTURE_COUNT; i++) {
-    loadTexture(textures[i], texId[i]);
+  const int texture_count = sizeof(textures) / sizeof(textures[0]);
+  app.tex_map.entries = malloc(sizeof(texture) * texture_count);
+  app.tex_map.texId = malloc(sizeof(GLuint) * texture_count);
+  app.tex_map.entries = textures;
+
+
+  glGenTextures(texture_count, app.tex_map.texId);
+  for (int i = 0; i < texture_count; i++) {
+    app.tex_map.entries[i].idx = app.tex_map.texId[i];
+    loadTexture(textures[i]);
   }
 }
 
@@ -129,50 +137,37 @@ void HandleActiveMouseMotion(int x, int y) {
 }
 
 void HandlePassiveMouseMotion(int x, int y) {
-  if (firstMouse) {
-    lastX = (float)x;
-    lastY = (float)y;
-    firstMouse = false;
-    return;
-  }
+    int centerX = app.window_width / 2;
+    int centerY = app.window_height / 2;
 
-  float xoffset = (float)x - lastX;
-  float yoffset = lastY - (float)y; // Invertido
-  lastX = (float)x;
-  lastY = (float)y;
+    // Ignore warp events — GLUT sends one after glutWarpPointer()
+    if (x == centerX && y == centerY) return;
 
-  float sensitivity = 0.1f;
-  xoffset *= sensitivity;
-  yoffset *= sensitivity;
+    float xoffset = x - centerX;
+    float yoffset = centerY - y; // Inverted Y
 
-  yaw += xoffset;
-  pitch += yoffset;
+    float sensitivity = 0.1f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
 
-  // Clamp pitch
-  if (pitch > 89.0f)
-    pitch = 89.0f;
-  if (pitch < -89.0f)
-    pitch = -89.0f;
+    yaw += xoffset;
+    pitch += yoffset;
 
-  // Recalcular cameraFront
-  vec3f front;
-  front.x = cos(rad(yaw)) * cos(rad(pitch));
-  front.y = sin(rad(pitch));
-  front.z = sin(rad(yaw)) * cos(rad(pitch));
-  cameraFront = normalize(front);
+    // Clamp pitch
+    if (pitch > 89.0f) pitch = 89.0f;
+    if (pitch < -89.0f) pitch = -89.0f;
 
-  // === CORREÇÃO DO MOUSE ===
-  // Se o mouse atingir a borda, teleporte para o centro e
-  // REINICIE a lógica do 'firstMouse' para evitar saltos.
-  int margin = 1; // Margem de 1 pixel
-  if (x >= app.window_width - margin || y >= app.window_height - margin ||
-      x <= margin || y <= margin) {
-    lastX = app.window_width / 2.0f;
-    lastY = app.window_height / 2.0f;
-    glutWarpPointer((int)lastX, (int)lastY);
-    firstMouse = true; // ESSA é a correção chave
-  };
+    // Recompute direction
+    vec3f front;
+    front.x = cos(rad(yaw)) * cos(rad(pitch));
+    front.y = sin(rad(pitch));
+    front.z = sin(rad(yaw)) * cos(rad(pitch));
+    cameraFront = normalize(front);
+
+    // Warp back to center each frame
+    glutWarpPointer(centerX, centerY);
 }
+
 
 void Mouse(int button, int state, int x, int y) {
   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
@@ -183,7 +178,6 @@ void Mouse(int button, int state, int x, int y) {
   };
 };
 
-// === ATUALIZADO: Handler de Tecla Pressionada (só define flags) ===
 void keyboard(unsigned char key, int x, int y) {
   if (key == 27) { // ESC
     clean_app();
@@ -212,9 +206,9 @@ void keyboard(unsigned char key, int x, int y) {
   if (key == 'e' || key == 'E') {
     // Handle 'E'
   };
+
 };
 
-// === NOVO: Handler de Tecla Solta (define flags como falsas) ===
 void keyboardUp(unsigned char key, int x, int y) {
   if (key == 'w' || key == 'W') {
     key_w = false;
@@ -243,63 +237,63 @@ void TeclasEspeciais(int key, int x, int y) {
   // ...
 };
 
-// === ATUALIZADO: Render Scene (agora processa input) ===
-void render_scene() {
-  // === Cálculo do DeltaTime ===
-  float currentFrame = glutGet(GLUT_ELAPSED_TIME);
-  deltaTime = currentFrame - lastFrame;
-  lastFrame = currentFrame;
-
-  // === NOVO: Processar Input do Teclado (movido para cá) ===
-  float speed = cameraSpeed * deltaTime;
+void process_input() {
+ float speed = cameraSpeed * deltaTime;
   vec3f worldUp = {0.0f, 1.0f, 0.0f};
   vec3f cameraRight = normalize(cross(cameraFront, worldUp));
 
   if (key_w) {
     cameraPos.x += cameraFront.x * speed;
     cameraPos.z += cameraFront.z * speed;
-  };
+  }
   if (key_s) {
     cameraPos.x -= cameraFront.x * speed;
     cameraPos.z -= cameraFront.z * speed;
-  };
+  }
   if (key_a) {
     cameraPos.x -= cameraRight.x * speed;
     cameraPos.z -= cameraRight.z * speed;
-  };
+  }
   if (key_d) {
     cameraPos.x += cameraRight.x * speed;
     cameraPos.z += cameraRight.z * speed;
-  };
+  }
   if (key_space) {
     cameraPos.y += speed;
-  };
+  }
   if (key_f) {
     cameraPos.y -= speed;
-  };
-  // === FIM: Processar Input ===
+  }
+}
+
+// === ATUALIZADO: Render Scene (agora processa input) ===
+void render_scene() {
+  // === Cálculo do DeltaTime ===
+  float currentFrame = glutGet(GLUT_ELAPSED_TIME);
+  deltaTime = (currentFrame - lastFrame) / 1000.0f;
+  lastFrame = currentFrame;
+
+  process_input();
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
-  // === ATUALIZADO: Use gluLookAt para câmera ===
   vec3f center = {cameraPos.x + cameraFront.x, cameraPos.y + cameraFront.y,
                   cameraPos.z + cameraFront.z};
-  gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z, // Eye
-            center.x, center.y, center.z,          // Center
-            cameraUp.x, cameraUp.y, cameraUp.z);   // Up
+  gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 
+            center.x, center.y, center.z,          
+            cameraUp.x, cameraUp.y, cameraUp.z);   
 
-  // --- Seu código de desenho ---
-  Color red = {1.0f, 0.0f, 0.0f, 1.0f};
-  draw_grass((vec3f){-200.0f, -200.0f, 0.0f}, (vec3f){200.0f, 200.0f, 0.0f}, (Color){0.3f, 0.3f, 0.3f, 1.0f}, texId[1]);
 
-  draw_wall((vec3f){-2.0f, -2.0f, 0.0f}, (vec3f){-2.0f, 2.0f, 0.0f}, 2.0f,
-            (Color){0.6f, 0.4f, 0.2f, 1.0f}, 0, DRAW_CUBE_SOLID);
+  // draw
+  draw_skybox(50.0f, app.tex_map.texId[0], cameraPos, (Color){1.0f, 1.0f, 1.0f, 1.0f});
+  draw_grass((vec3f){-200.0f, -200.0f, 0.0f}, (vec3f){200.0f, 200.0f, 0.0f}, (Color){0.3f, 0.3f, 0.3f, 1.0f}, app.tex_map.texId[1]);
+
   draw_ceiling((vec3f){-2.0f, -2.0f, 0.0f}, (vec3f){2.0f, 2.0f, 0.0f}, 2.0f,
                (Color){0.3f, 0.3f, 0.3f, 1.0f}, 0);
-  draw_cube((vec3f){0.0f, 0.0f, 0.5f}, 1.0f, red, 0, DRAW_CUBE_SOLID);
+  draw_tree((vec3f){5.0f, 0.0f, -5.0f}, 3.0f, 5.0f, app.tex_map.texId[2]);
+  draw_tree((vec3f){-10.0f, 0.0f, -8.0f}, 3.0f, 5.0f, app.tex_map.texId[2]);
 
-  draw_skybox(50.0f, texId[0], cameraPos, (Color){1.0f, 1.0f, 1.0f, 1.0f});
 
   glutSwapBuffers();
 }
@@ -332,7 +326,7 @@ void init_window(int width, int height) {
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(45.0f, (float)width / (float)height, 0.1f, 100.0f);
+  gluPerspective(45.0f, (float)width / (float)height, 0.1f, 1000.0f);
   glMatrixMode(GL_MODELVIEW);
 
   init_render();
