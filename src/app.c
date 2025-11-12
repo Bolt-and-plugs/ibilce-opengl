@@ -233,7 +233,6 @@ void render_scene() {
             center.x, center.y, center.z,          
             cameraUp.x, cameraUp.y, cameraUp.z);   
 
-
   // draw
   draw_skybox(50.0f, tex_sky, cameraPos, (Color){1.0f, 1.0f, 1.0f, 1.0f});
 
