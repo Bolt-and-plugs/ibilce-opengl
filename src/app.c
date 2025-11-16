@@ -8,7 +8,7 @@
 
 App app;
 
-Model* cube = NULL;
+Model* cube = NULL, *mini_locker = NULL;
 u32 tex_sky = 0;
 u32 tex_grass = 0;
 u32 tex_tree = 0;
@@ -84,6 +84,9 @@ void clean_app() {
   c_info("Cleaning up application...");
   if (cube) {
     free_model(cube);
+  }
+  if (mini_locker) {
+    free_model(mini_locker);
   }
   free_all_textures();
   exit(0);
@@ -239,6 +242,8 @@ void render_scene() {
 
   draw_model(cube, (vec3f){0.0f, 0.0f, -3.0f}, (vec3f){0.0f, 45.0f, 0.0f},
              (vec3f){1.0f, 1.0f, 1.0f});
+  draw_model(mini_locker, (vec3f){2.0f, 0.0f, -5.0f}, (vec3f){0.0f, 90.0f, 0.0f},
+              (vec3f){0.5f, 0.5f, 0.5f});
 
   glutSwapBuffers();
 }
@@ -289,6 +294,7 @@ int main(int argc, char **argv) {
   init_textures();
 
   cube = load_model("assets/models/Untitled.obj");
+  mini_locker = load_model("assets/models/locker_teste.obj");
 
   lastFrame = glutGet(GLUT_ELAPSED_TIME);
   glutMainLoop();

@@ -85,6 +85,14 @@ static void load_materials(obj* obj, const char* mtl_path) {
 
       current_material.texture_id = load_texture(texture_full_path);
     }
+    // handle only colors
+    else if (strncmp(line_buffer, "Kd ", 3) == 0 && material_pending) {
+      float r, g, b;
+      sscanf(line_buffer, "Kd %f %f %f", &r, &g, &b);
+      current_material.diffuse.r = (u8)(r * 255);
+      current_material.diffuse.g = (u8)(g * 255);
+      current_material.diffuse.b = (u8)(b * 255);
+    }
   }
 
   if (material_pending) {

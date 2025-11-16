@@ -8,6 +8,7 @@
 typedef struct __Material {
   char name[128];
   u32 texture_id;
+  Color diffuse;
 } Material;
 
 typedef struct __MeshGroup {

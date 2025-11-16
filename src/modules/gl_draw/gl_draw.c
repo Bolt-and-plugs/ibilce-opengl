@@ -129,6 +129,13 @@ void draw_model(obj* model, vec3f position, vec3f rotation, vec3f scale) {
         int t_idx = f->corners[k].texture_index - 1;
         int n_idx = f->corners[k].normal_index - 1;
 
+        if (group->material->diffuse.r >= 0.0f && group->material->diffuse.g >= 0.0f &&
+            group->material->diffuse.b >= 0.0f && !(group->material->texture_id > 0)) {
+          glColor3f(group->material->diffuse.r,
+                    group->material->diffuse.g,
+                    group->material->diffuse.b);
+        }
+
         if (n_idx >= 0) {
           glNormal3f(normals[n_idx].x, normals[n_idx].y, normals[n_idx].z);
         }
