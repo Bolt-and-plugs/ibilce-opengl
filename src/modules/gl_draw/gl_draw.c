@@ -92,8 +92,7 @@ void draw_model(obj* model, vec3f position, vec3f rotation, vec3f scale) {
   if (!model || model->mesh_groups->size == 0) return;
 
   glPushMatrix();
-  glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT);
-
+  glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT | GL_TEXTURE_BIT | GL_POLYGON_BIT);
   // 1. Transformações (Correto)
   glTranslatef(position.x, position.y, position.z);
   glRotatef(rotation.x, 1.0f, 0.0f, 0.0f);
@@ -101,24 +100,31 @@ void draw_model(obj* model, vec3f position, vec3f rotation, vec3f scale) {
   glRotatef(rotation.z, 0.0f, 0.0f, 1.0f);
   glScalef(scale.x, scale.y, scale.z);
 
-  // Ponteiros Mestras (Correto)
   vec3f* vertices = (vec3f*)model->vertecies->data;
   vec2f* texcoords = (vec2f*)model->textures->data;
   vec3f* normals = (vec3f*)model->normals->data;
 
   MeshGroup* groups_array = (MeshGroup*)model->mesh_groups->data;
 
+
   for (int i = 0; i < model->mesh_groups->size; i++) {
     MeshGroup* group = &groups_array[i];
-
+    bool has_textures = (group->material && group->material->texture_id > 0);
     face* faces = (face*)group->faces->data;
 
-    if (group->material && group->material->texture_id > 0) {
+    if (has_textures) {
+      glEnable(GL_TEXTURE_2D);
       bind_texture(group->material->texture_id);
       glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     } else {
-      bind_texture(0);
-      glColor4f(0.8f, 0.8f, 0.8f, 1.0f);
+      glDisable(GL_TEXTURE_2D); 
+      if (group->material) {
+        glColor3f(group->material->diffuse.r / 255.0f,
+                  group->material->diffuse.g / 255.0f,
+                  group->material->diffuse.b / 255.0f);
+      } else {
+        glColor4f(0.8f, 0.8f, 0.8f, 1.0f);
+      }
     }
 
     glBegin(GL_TRIANGLES);
@@ -128,13 +134,6 @@ void draw_model(obj* model, vec3f position, vec3f rotation, vec3f scale) {
         int v_idx = f->corners[k].vertex_index - 1;
         int t_idx = f->corners[k].texture_index - 1;
         int n_idx = f->corners[k].normal_index - 1;
-
-        if (group->material->diffuse.r >= 0.0f && group->material->diffuse.g >= 0.0f &&
-            group->material->diffuse.b >= 0.0f && !(group->material->texture_id > 0)) {
-          glColor3f(group->material->diffuse.r,
-                    group->material->diffuse.g,
-                    group->material->diffuse.b);
-        }
 
         if (n_idx >= 0) {
           glNormal3f(normals[n_idx].x, normals[n_idx].y, normals[n_idx].z);

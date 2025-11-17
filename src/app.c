@@ -242,7 +242,7 @@ void render_scene() {
 
   draw_model(cube, (vec3f){0.0f, 0.0f, -3.0f}, (vec3f){0.0f, 45.0f, 0.0f},
              (vec3f){1.0f, 1.0f, 1.0f});
-  draw_model(mini_locker, (vec3f){2.0f, 0.0f, -5.0f}, (vec3f){0.0f, 90.0f, 0.0f},
+  draw_model(mini_locker, (vec3f){2.0f, 0.0f, -5.0f}, (vec3f){0.0f, -90.0f, 0.0f},
               (vec3f){0.5f, 0.5f, 0.5f});
 
   glutSwapBuffers();
@@ -253,10 +253,6 @@ void init_render() {
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-
-  glEnable(GL_TEXTURE_2D);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   glutDisplayFunc(render_scene);
   glutIdleFunc(render_scene); 
@@ -294,7 +290,7 @@ int main(int argc, char **argv) {
   init_textures();
 
   cube = load_model("assets/models/Untitled.obj");
-  mini_locker = load_model("assets/models/locker_teste.obj");
+  mini_locker = load_model("assets/models/locker_test.obj");
 
   lastFrame = glutGet(GLUT_ELAPSED_TIME);
   glutMainLoop();
