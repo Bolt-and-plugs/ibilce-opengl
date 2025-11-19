@@ -1,6 +1,7 @@
 #include "app.h"
 #include "modules/obj_parser/obj_parser.h"
 #include <GL/gl.h>
+#include <unistd.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -8,10 +9,8 @@
 
 App app;
 
-Model* cube = NULL, *mini_locker = NULL;
-u32 tex_sky = 0;
-u32 tex_grass = 0;
-u32 tex_tree = 0;
+Model* cube = NULL, *mini_locker = NULL, *structure = NULL;
+u32 tex_sky = 0, tex_grass = 0, tex_tree = 0;
 
 
 float rad(float angle) { return angle * M_PI / 180.0f; }
@@ -87,6 +86,9 @@ void clean_app() {
   }
   if (mini_locker) {
     free_model(mini_locker);
+  }
+  if (structure) {
+    free_model(structure);
   }
   free_all_textures();
   exit(0);
@@ -244,6 +246,8 @@ void render_scene() {
              (vec3f){1.0f, 1.0f, 1.0f});
   draw_model(mini_locker, (vec3f){2.0f, 0.0f, -5.0f}, (vec3f){0.0f, -90.0f, 0.0f},
               (vec3f){0.5f, 0.5f, 0.5f});
+  draw_model(structure, (vec3f){-3.0f, 0.0f, -7.0f}, (vec3f){0.0f, 0.0f, 0.0f},
+              (vec3f){1.0f, 1.0f, 1.0f});
 
   glutSwapBuffers();
 }
@@ -291,6 +295,7 @@ int main(int argc, char **argv) {
 
   cube = load_model("assets/models/Untitled.obj");
   mini_locker = load_model("assets/models/locker_test.obj");
+  structure = load_model("assets/models/estrutura.obj");
 
   lastFrame = glutGet(GLUT_ELAPSED_TIME);
   glutMainLoop();
