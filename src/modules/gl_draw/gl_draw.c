@@ -1,4 +1,7 @@
 #include "gl_draw.h"
+#include "../../app.h"
+
+extern App app;
 
 static GLUquadric* skyQuadric = NULL;
 
@@ -151,4 +154,27 @@ void draw_model(obj* model, vec3f position, vec3f rotation, vec3f scale) {
 
   glPopAttrib();
   glPopMatrix();
+}
+
+
+// render text on (x, y) and z from camera position
+void render_text(vec2f pos, void* font, const char* text, Color color) {
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    gluOrtho2D(0, app.window_width, 0, app.window_height);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+    glRasterPos2f(pos.x, app.window_height - pos.y);
+
+    glColor4f(color.r, color.g, color.b, color.a);
+    
+    for (int i = 0; i < strlen(text) + 1; i++) {
+        glutBitmapCharacter(font, text[i]); 
+    }
+    glPopMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
 }

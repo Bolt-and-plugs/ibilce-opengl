@@ -2,11 +2,6 @@
 #define __APP
 
 #include "modules/logger/log.h"
-#include "modules/render/render.h"
-// #include "modules/shaders/shaders.h"
-#include "modules/obj_parser/obj_parser.h"
-#include "modules/gl_draw/gl_draw.h"
-#include "defines.h"
 
 typedef struct __player {
   float x, y, z;

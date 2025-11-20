@@ -11,7 +11,8 @@ typedef enum {
 
 void draw_skybox(float size, u32 texture_id, vec3f player_pos, Color color);
 
-
 void draw_model(Model* model, vec3f position, vec3f rotation, vec3f scale);
+
+void render_text(vec2f pos, void* font, const char* text, Color color);
 
 #endif

@@ -108,13 +108,13 @@ obj *load_model(const char *path) {
 
   FILE *fp = fopen(path, "r");
   if (!fp) {
-    c_error(FILE_OPEN_FAILURE, "Could not open file");
+    c_error(FILE_OPEN_FAILURE, "Could not open file %s", path);
     return NULL;
   }
 
   obj *obj = init_obj();
   if (!obj) {
-    c_error(MEMORY_ALLOC_ERROR, "Could not init obj");
+    c_error(MEMORY_ALLOC_ERROR, "Could not init obj with path: %s", path);
     fclose(fp);
     return NULL;
   }

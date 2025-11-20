@@ -2,6 +2,9 @@
 #include "modules/obj_parser/obj_parser.h"
 #include <GL/gl.h>
 #include <unistd.h>
+#include "modules/obj_parser/obj_parser.h"
+#include "modules/gl_draw/gl_draw.h"
+#include "defines.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -9,9 +12,8 @@
 
 App app;
 
-Model* cube = NULL, *mini_locker = NULL, *structure = NULL;
+Model *mini_locker = NULL, *structure = NULL;
 u32 tex_sky = 0, tex_grass = 0, tex_tree = 0;
-
 
 float rad(float angle) { return angle * M_PI / 180.0f; }
 
@@ -27,7 +29,7 @@ vec3f normalize(vec3f v) {
   return (vec3f){v.x / mag, v.y / mag, v.z / mag};
 }
 
-vec3f cameraPos = {0.0f, 0.5f, 5.0f};
+vec3f cameraPos = {40.0f, 1.f, -20.0f};
 vec3f cameraFront = {0.0f, 0.0f, -1.0f};
 vec3f cameraUp = {0.0f, 1.0f, 0.0f};
 
@@ -37,7 +39,7 @@ float lastX = 300.0f;
 float lastY = 200.0f;
 bool firstMouse = true;
 
-float cameraSpeed = 2.5f;
+float cameraSpeed = .05f;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
@@ -66,12 +68,11 @@ void set_debug_mode() {
   app.min_log_level = get_min_log_level();
 }
 
-
 void init_textures() {
   c_info("Carregando texturas do mundo...");
-  tex_sky   = load_texture("assets/textures/skybox.jpg");
+  tex_sky = load_texture("assets/textures/skybox.jpg");
   tex_grass = load_texture("assets/textures/grass.jpg");
-  tex_tree  = load_texture("assets/textures/tree.png");
+  tex_tree = load_texture("assets/textures/tree.png");
 }
 
 void init_app() {
@@ -81,9 +82,6 @@ void init_app() {
 
 void clean_app() {
   c_info("Cleaning up application...");
-  if (cube) {
-    free_model(cube);
-  }
   if (mini_locker) {
     free_model(mini_locker);
   }
@@ -94,38 +92,39 @@ void clean_app() {
   exit(0);
 }
 
-void HandleActiveMouseMotion(int x, int y) {
-}
+void HandleActiveMouseMotion(int x, int y) {}
 
 void HandlePassiveMouseMotion(int x, int y) {
-    int centerX = app.window_width / 2;
-    int centerY = app.window_height / 2;
+  int centerX = app.window_width / 2;
+  int centerY = app.window_height / 2;
 
-    // Ignore warp events — GLUT sends one after glutWarpPointer()
-    if (x == centerX && y == centerY) return;
+  // Ignore warp events — GLUT sends one after glutWarpPointer()
+  if (x == centerX && y == centerY)
+    return;
 
-    float xoffset = x - centerX;
-    float yoffset = centerY - y; 
+  float xoffset = x - centerX;
+  float yoffset = centerY - y;
 
-    float sensitivity = 0.1f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
+  float sensitivity = 0.1f;
+  xoffset *= sensitivity;
+  yoffset *= sensitivity;
 
-    yaw += xoffset;
-    pitch += yoffset;
+  yaw += xoffset;
+  pitch += yoffset;
 
-    if (pitch > 89.0f) pitch = 89.0f;
-    if (pitch < -89.0f) pitch = -89.0f;
+  if (pitch > 89.0f)
+    pitch = 89.0f;
+  if (pitch < -89.0f)
+    pitch = -89.0f;
 
-    vec3f front;
-    front.x = cos(rad(yaw)) * cos(rad(pitch));
-    front.y = sin(rad(pitch));
-    front.z = sin(rad(yaw)) * cos(rad(pitch));
-    cameraFront = normalize(front);
+  vec3f front;
+  front.x = cos(rad(yaw)) * cos(rad(pitch));
+  front.y = sin(rad(pitch));
+  front.z = sin(rad(yaw)) * cos(rad(pitch));
+  cameraFront = normalize(front);
 
-    glutWarpPointer(centerX, centerY);
+  glutWarpPointer(centerX, centerY);
 }
-
 
 void Mouse(int button, int state, int x, int y) {
   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
@@ -163,7 +162,6 @@ void keyboard(unsigned char key, int x, int y) {
   if (key == 'e' || key == 'E') {
     // Handle 'E'
   };
-
 };
 
 void keyboardUp(unsigned char key, int x, int y) {
@@ -194,7 +192,7 @@ void TeclasEspeciais(int key, int x, int y) {
 };
 
 void process_input() {
- float speed = cameraSpeed * deltaTime;
+  float speed = cameraSpeed;
   vec3f worldUp = {0.0f, 1.0f, 0.0f};
   vec3f cameraRight = normalize(cross(cameraFront, worldUp));
 
@@ -224,7 +222,7 @@ void process_input() {
 
 void render_scene() {
   float currentFrame = glutGet(GLUT_ELAPSED_TIME);
-  deltaTime = (currentFrame - lastFrame) / 1000.0f;
+  deltaTime += (currentFrame - lastFrame) / 1000.0f;
   lastFrame = currentFrame;
 
   process_input();
@@ -234,20 +232,32 @@ void render_scene() {
 
   vec3f center = {cameraPos.x + cameraFront.x, cameraPos.y + cameraFront.y,
                   cameraPos.z + cameraFront.z};
-  gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z, 
-            center.x, center.y, center.z,          
-            cameraUp.x, cameraUp.y, cameraUp.z);   
+  gluLookAt(cameraPos.x, cameraPos.y, cameraPos.z, center.x, center.y, center.z,
+            cameraUp.x, cameraUp.y, cameraUp.z);
 
+  if (deltaTime <= 200) {
+    // wasd to move
+    render_text(
+        (vec2f){10.0f, 20.0f}, GLUT_BITMAP_HELVETICA_18,
+        "Use WASD to move, mouse to look around, SPACE/F to move up/down",
+        (Color){1.0f, 1.0f, 1.0f, 1.0f});
+
+    // esc to exit
+    render_text((vec2f){10.0f, 40.0f}, GLUT_BITMAP_HELVETICA_18,
+                "Press ESC to exit", (Color){1.0f, 1.0f, 1.0f, 1.0f});
+
+    // render delta time text
+    char deltaTimeText[50];
+    snprintf(deltaTimeText, sizeof(deltaTimeText), "Delta Time: %3f s",
+             deltaTime);
+    render_text((vec2f){10.0f, 60.0f}, GLUT_BITMAP_HELVETICA_18,
+                deltaTimeText, (Color){1.0f, 1.0f, 1.0f, 1.0f});
+  }
   // draw
   draw_skybox(50.0f, tex_sky, cameraPos, (Color){1.0f, 1.0f, 1.0f, 1.0f});
 
-
-  draw_model(cube, (vec3f){0.0f, 0.0f, -3.0f}, (vec3f){0.0f, 45.0f, 0.0f},
-             (vec3f){1.0f, 1.0f, 1.0f});
-  draw_model(mini_locker, (vec3f){2.0f, 0.0f, -5.0f}, (vec3f){0.0f, -90.0f, 0.0f},
-              (vec3f){0.5f, 0.5f, 0.5f});
   draw_model(structure, (vec3f){-3.0f, 0.0f, -7.0f}, (vec3f){0.0f, 0.0f, 0.0f},
-              (vec3f){1.0f, 1.0f, 1.0f});
+             (vec3f){1.0f, 1.0f, 1.0f});
 
   glutSwapBuffers();
 }
@@ -259,7 +269,7 @@ void init_render() {
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
   glutDisplayFunc(render_scene);
-  glutIdleFunc(render_scene); 
+  glutIdleFunc(render_scene);
 }
 
 void init_window(int width, int height) {
@@ -290,10 +300,9 @@ void init_window(int width, int height) {
 int main(int argc, char **argv) {
   init_app();
   glutInit(&argc, argv);
-  init_window(600, 400);
+  init_window(1200, 800);
   init_textures();
 
-  cube = load_model("assets/models/Untitled.obj");
   mini_locker = load_model("assets/models/locker_test.obj");
   structure = load_model("assets/models/estrutura.obj");
 
