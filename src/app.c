@@ -13,7 +13,7 @@
 App app;
 
 Model *mini_locker = NULL, *structure = NULL;
-u32 tex_sky = 0, tex_grass = 0, tex_tree = 0;
+u32 tex_sky = 0, tex_grass = 0, tex_tree = 0, tex_calha = 0;
 
 float rad(float angle) { return angle * M_PI / 180.0f; }
 
@@ -71,8 +71,6 @@ void set_debug_mode() {
 void init_textures() {
   c_info("Carregando texturas do mundo...");
   tex_sky = load_texture("assets/textures/skybox.jpg");
-  tex_grass = load_texture("assets/textures/grass.jpg");
-  tex_tree = load_texture("assets/textures/tree.png");
 }
 
 void init_app() {
