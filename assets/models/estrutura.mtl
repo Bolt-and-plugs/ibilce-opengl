@@ -11,6 +11,16 @@ Ni 1.450000
 d 1.000000
 illum 2
 
+newmtl Branco.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
 newmtl Gesso
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -101,6 +111,16 @@ Ni 1.500000
 d 1.000000
 illum 2
 
+newmtl Material.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+
 newmtl Material.004
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -151,16 +171,6 @@ d 1.000000
 illum 2
 map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
 
-newmtl Material.009
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
-
 newmtl Material.010
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -180,3 +190,23 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+
+newmtl Material.012
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+
+newmtl Material.013
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.155159 0.000245 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
