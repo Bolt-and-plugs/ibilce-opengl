@@ -19,7 +19,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Gesso.001
 Ns 250.000000
@@ -29,7 +29,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Gesso.002
 Ns 250.000000
@@ -39,7 +39,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Gesso.003
 Ns 250.000000
@@ -49,7 +49,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Gesso.004
 Ns 250.000000
@@ -59,7 +59,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Gesso.005
 Ns 250.000000
@@ -69,7 +69,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Grass
 Ns 250.000000
@@ -79,7 +79,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/grass.jpg
+map_Kd ../textures/grass.jpg
 
 newmtl Material
 Ns 250.000000
@@ -89,7 +89,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+map_Kd ../textures/calha.jpg
 
 newmtl Material.001
 Ns 250.000000
@@ -99,7 +99,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Material.002
 Ns 250.000000
@@ -119,7 +119,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Material.004
 Ns 250.000000
@@ -129,7 +129,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Material.005
 Ns 250.000000
@@ -139,7 +139,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+map_Kd ../textures/calha.jpg
 
 newmtl Material.006
 Ns 250.000000
@@ -149,7 +149,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+map_Kd ../textures/calha.jpg
 
 newmtl Material.007
 Ns 250.000000
@@ -159,7 +159,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+map_Kd ../textures/calha.jpg
 
 newmtl Material.008
 Ns 250.000000
@@ -169,7 +169,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+map_Kd ../textures/calha.jpg
 
 newmtl Material.010
 Ns 250.000000
@@ -179,7 +179,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+map_Kd ../textures/calha.jpg
 
 newmtl Material.011
 Ns 250.000000
@@ -189,7 +189,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+map_Kd ../textures/calha.jpg
 
 newmtl Material.012
 Ns 250.000000
@@ -199,7 +199,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
+map_Kd ../textures/gesso.jpg
 
 newmtl Material.013
 Ns 250.000000
@@ -219,4 +219,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+map_Kd ../textures/calha.jpg
