@@ -20,6 +20,9 @@ typedef struct __App {
   GLfloat ambient_light[4];
   GLfloat diffuse_light[4];
   GLfloat light_pos[4];
+  GLfloat specular_light[4];
+  GLfloat specularity[4];
+  
 } App;
 
 

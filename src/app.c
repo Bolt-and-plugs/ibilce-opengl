@@ -75,11 +75,18 @@ void init_textures() {
 void init_app() {
   set_debug_mode();
   app.name = "Trabalho CG";
-  for (int i = 0; i < 4; i++) {
-    app.ambient_light[i] = (GLfloat)1.0f;
-    app.diffuse_light[i] = (GLfloat)1.0f;
-    app.light_pos[i] = (GLfloat)1.0f;
-  }
+
+  GLfloat local_ambient[4] = {1, 1, 1, 1.0};
+  GLfloat diffuse_light[4] = {0.4, 0.4, 0.4, 1.0};
+  GLfloat specular_light[4] = {1.0, 0.0, 1.0, 1.0};
+  GLfloat light_pos[4] = {0.0, 20.0, 60.0, 1.0};
+  GLfloat specularity[4] = {0.0, 0.0, 0.0, 1.0};
+
+  memcpy(app.ambient_light,  local_ambient, sizeof(GLfloat) * 4);
+  memcpy(app.diffuse_light,  diffuse_light, sizeof(GLfloat) * 4);
+  memcpy(app.light_pos,  light_pos, sizeof(GLfloat) * 4);
+  memcpy(app.specular_light,  specular_light, sizeof(GLfloat) * 4);
+  memcpy(app.specularity,  specularity, sizeof(GLfloat) * 4);
 }
 
 void clean_app() {
@@ -276,8 +283,11 @@ void init_render() {
 
   glLightfv(GL_LIGHT0, GL_AMBIENT, app.ambient_light);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, app.diffuse_light);
+  glLightfv(GL_LIGHT0, GL_SPECULAR, app.specular_light);
   glLightfv(GL_LIGHT0, GL_POSITION, app.light_pos);
   glEnable(GL_LIGHT0);
+
+  glMateriali(GL_FRONT, GL_SHININESS, 20);
 
   glutDisplayFunc(render_scene);
   glutIdleFunc(render_scene);
