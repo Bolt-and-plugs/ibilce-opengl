@@ -1,10 +1,9 @@
 #include "app.h"
+#include "defines.h"
+#include "modules/gl_draw/gl_draw.h"
 #include "modules/obj_parser/obj_parser.h"
 #include <GL/gl.h>
 #include <unistd.h>
-#include "modules/obj_parser/obj_parser.h"
-#include "modules/gl_draw/gl_draw.h"
-#include "defines.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -76,6 +75,11 @@ void init_textures() {
 void init_app() {
   set_debug_mode();
   app.name = "Trabalho CG";
+  for (int i = 0; i < 4; i++) {
+    app.ambient_light[i] = (GLfloat)1.0f;
+    app.diffuse_light[i] = (GLfloat)1.0f;
+    app.light_pos[i] = (GLfloat)1.0f;
+  }
 }
 
 void clean_app() {
@@ -248,8 +252,8 @@ void render_scene() {
     char deltaTimeText[50];
     snprintf(deltaTimeText, sizeof(deltaTimeText), "Delta Time: %3f s",
              deltaTime);
-    render_text((vec2f){10.0f, 60.0f}, GLUT_BITMAP_HELVETICA_18,
-                deltaTimeText, (Color){1.0f, 1.0f, 1.0f, 1.0f});
+    render_text((vec2f){10.0f, 60.0f}, GLUT_BITMAP_HELVETICA_18, deltaTimeText,
+                (Color){1.0f, 1.0f, 1.0f, 1.0f});
   }
   // draw
   draw_skybox(50.0f, tex_sky, cameraPos, (Color){1.0f, 1.0f, 1.0f, 1.0f});
@@ -265,6 +269,15 @@ void init_render() {
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+  glEnable(GL_LIGHTING);
+  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, app.ambient_light);
+  glEnable(GL_COLOR_MATERIAL);
+
+  glLightfv(GL_LIGHT0, GL_AMBIENT, app.ambient_light);
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, app.diffuse_light);
+  glLightfv(GL_LIGHT0, GL_POSITION, app.light_pos);
+  glEnable(GL_LIGHT0);
 
   glutDisplayFunc(render_scene);
   glutIdleFunc(render_scene);
