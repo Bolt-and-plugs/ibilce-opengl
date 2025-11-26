@@ -1,17 +1,7 @@
-# Blender 4.5.5 LTS MTL File: 'estrutura.blend'
+# Blender 5.0.0 MTL File: 'estrutura.blend'
 # www.blender.org
 
 newmtl Branco
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-
-newmtl Branco.001
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -100,6 +90,16 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg
+
+newmtl Material.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/gesso.jpg
 
 newmtl Material.002
 Ns 250.000000
@@ -210,3 +210,13 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+
+newmtl Material.014
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /home/felipe-gsilva/dev/cs/ibilce-opengl/assets/textures/calha.jpg

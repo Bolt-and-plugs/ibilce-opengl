@@ -38,7 +38,7 @@ float lastX = 300.0f;
 float lastY = 200.0f;
 bool firstMouse = true;
 
-float cameraSpeed = .05f;
+float cameraSpeed = .5f;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
