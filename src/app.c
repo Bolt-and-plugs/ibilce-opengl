@@ -324,7 +324,6 @@ int main(int argc, char **argv) {
   init_window(1200, 800);
   init_textures();
 
-  mini_locker = load_model("assets/models/locker_test.obj");
   structure = load_model("assets/models/estrutura.obj");
 
   lastFrame = glutGet(GLUT_ELAPSED_TIME);
