@@ -126,7 +126,7 @@ void draw_model(obj* model, vec3f position, vec3f rotation, vec3f scale) {
                   group->material->diffuse.g / 255.0f,
                   group->material->diffuse.b / 255.0f);
       } else {
-        glColor4f(0.8f, 0.8f, 0.8f, 1.0f);
+        glColor4f(1.f, 0.65f, 0, 1.0f);
       }
     }
 

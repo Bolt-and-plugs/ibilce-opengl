@@ -321,55 +321,15 @@ d 1.000000
 illum 2
 map_Kd ../textures/grass.jpg
 
-newmtl Materiais
+newmtl Macaneta
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_diff_4k.jpg
-map_Ns -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_rough_4k.exr
-
-newmtl Materiais.001
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_diff_4k.jpg
-map_Ns -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_rough_4k.exr
-
-newmtl Materiais.002
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_diff_4k.jpg
-map_Ns -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_rough_4k.exr
-
-newmtl Materiais.003
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_diff_4k.jpg
-map_Ns -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_rough_4k.exr
-
-newmtl Materiais.004
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_diff_4k.jpg
-map_Ns -s 4.9999995 5 5 ../../blender_models/Downloads/bark_willow_4k.blend/textures/bark_willow_rough_4k.exr
+map_Kd ../textures/tex_macaneta.jpg
 
 newmtl Material
 Ns 250.000000
@@ -761,26 +721,6 @@ Ni 1.500000
 d 1.000000
 illum 2
 
-newmtl Material.041
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.042
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
 newmtl Material.044
 Ns 1000.000000
 Ka 1.000000 1.000000 1.000000
@@ -790,46 +730,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-
-newmtl Material.045
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.046
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.047
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.050
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
 
 newmtl Material.051
 Ns 1000.000000
@@ -841,46 +741,6 @@ Ni 1.500000
 d 1.000000
 illum 2
 
-newmtl Material.052
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.053
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.054
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.055
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
 newmtl Material.056
 Ns 1000.000000
 Ka 1.000000 1.000000 1.000000
@@ -890,46 +750,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-
-newmtl Material.057
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.062
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.063
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.064
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
 
 newmtl Material.065
 Ns 1000.000000
@@ -941,46 +761,6 @@ Ni 1.500000
 d 1.000000
 illum 2
 
-newmtl Material.066
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.067
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.068
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.069
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
 newmtl Material.070
 Ns 1000.000000
 Ka 1.000000 1.000000 1.000000
@@ -990,16 +770,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-
-newmtl Material.071
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
 
 newmtl Material.072
 Ns 250.000000
@@ -1011,26 +781,6 @@ d 1.000000
 illum 2
 map_Kd ../../../../../Pictures/tex_macaneta.jpg
 
-newmtl Material.073
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.074
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
 newmtl Material.075
 Ns 1000.000000
 Ka 1.000000 1.000000 1.000000
@@ -1040,96 +790,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-
-newmtl Material.076
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.077
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.079
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.080
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.081
-Ns 1000.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.345530 0.673882 0.800149
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-
-newmtl Material.082
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.083
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.084
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.085
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
 
 newmtl Material.086
 Ns 1000.000000
@@ -1141,96 +801,6 @@ Ni 1.500000
 d 1.000000
 illum 2
 
-newmtl Material.087
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.088
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.089
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.090
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.091
-Ns 1000.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.345530 0.673882 0.800149
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-
-newmtl Material.092
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.093
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.094
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.095
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
 newmtl Material.096
 Ns 1000.000000
 Ka 1.000000 1.000000 1.000000
@@ -1240,76 +810,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-
-newmtl Material.097
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.098
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.099
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.100
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.101
-Ns 1000.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.345530 0.673882 0.800149
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-
-newmtl Material.102
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.103
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
 
 newmtl Material.104
 Ns 250.000000
@@ -1352,56 +852,6 @@ illum 2
 map_Kd ../../../../../Pictures/texturaescura.jpg
 
 newmtl Material.108
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_macaneta.jpg
-
-newmtl Material.109
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/tex_porta.jpg
-
-newmtl Material.110
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.111
-Ns 1000.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.345530 0.673882 0.800149
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-
-newmtl Material.112
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 1.000000
-illum 2
-map_Kd ../../../../../Pictures/texturaescura.jpg
-
-newmtl Material.113
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -1901,16 +1351,6 @@ d 1.000000
 illum 2
 map_Kd ../textures/calha.jpg
 
-newmtl Material.183
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.969769 0.999828 0.999828
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-
 newmtl Material.184
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -1989,7 +1429,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd ../../../../../../cs/ibilce-opengl/assets/textures/metal.jpg
+map_Kd ../textures/metal.jpg
 
 newmtl Metal.001
 Ns 250.000000
@@ -2101,6 +1541,36 @@ d 1.000000
 illum 2
 map_Kd ../../../../../../cs/ibilce-opengl/assets/textures/metal.jpg
 
+newmtl Porta
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd ../textures/tex_porta.jpg
+
+newmtl Porta.002
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd ../textures/tex_porta.jpg
+
+newmtl PortaJanela
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.345530 0.673882 0.800149
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
 newmtl White
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -2140,3 +1610,13 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+
+newmtl porta.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd ../textures/tex_porta.jpg
